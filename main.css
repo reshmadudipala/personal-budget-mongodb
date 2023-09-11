@@ -31,6 +31,11 @@ div.menu ul li a {
     color: #fff;
     margin: 0;
 }
+/*This is an A11Y change*/
+/*Adding focus to clickable options*/
+div.menu ul li a:focus {
+    outline: 2px solid #4d5791;
+}
 
 div.menu ul li a:hover  {
     background-color: white;
@@ -91,6 +96,11 @@ div.hero h2 {
     margin: 20px;
 }
 
+/*This is an A11Y change*/
+/*Adjusting the line height for readability*/
+.container div.text-box p {
+    line-height: 1.6;  
+}
 @media screen and (min-width: 768px) {
     .container .div.text-box {
         margin: 10px;
