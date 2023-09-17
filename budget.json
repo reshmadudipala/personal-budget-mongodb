@@ -1,0 +1,37 @@
+{
+    "mybudget": [
+        {
+            "title": "Eat out",
+            "budget": 30
+        },
+        {
+            "title": "Rent",
+            "budget": 400
+        },
+        {
+            "title": "Groceries",
+            "budget": 250
+        },
+        {
+            "title": "Tution Fee",
+            "budget": 200
+        },
+        {
+            "title": "Clothes",
+            "budget": 160
+        },
+        {
+            "title": "Internet",
+            "budget": 150
+        },
+        {
+            "title": "Stationary",
+            "budget": 120
+        },
+        {
+            "title": "Donation",
+            "budget": 100
+        }
+        
+    ]
+}
