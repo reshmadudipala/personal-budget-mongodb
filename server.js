@@ -4,65 +4,72 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const port = 3000;
+const mongoose = require('mongoose');
+const router = express.Router();
+const budgetModel = require('./models/budgetSchema');
+const bodyParser = require('body-parser');
 
-//app.use('/Reshma', express.static('public'));
+// Set up middleware to parse JSON data
+app.use(bodyParser.json());
 app.use(cors());
 
-const budget = {
-  mybudget: [
-    {
-      title: 'Eat out',
-      budget: 30
-    },
-    {
-      title: 'Rent',
-      budget: 400
-    },
-    {
-      title: 'Groceries',
-      budget: 90
-    },
-  ]
-};
+app.use('/pbudget', express.static('public'));
 
-//app.get('/',(req, res) => {
-// res.send('Hello World!')
-//});
+let url = 'mongodb://127.0.0.1:27017/reshma_mongodb';
 
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log("Connected to database")
+    budgetModel.find({})
+      .then((data) => {
+        console.log(data)
+      })
+      .catch((connectionError) => {
+        console.log(connectionError)
+      })
+  })
+  .catch((connectionError) => {
+    console.log(connectionError)
+  })
+
+// Define your endpoints
+
+// Endpoint to fetch data from the database
 app.get('/budget01', (req, res) => {
-  res.json(budget);
+  budgetModel.find({})
+  .then((data)=> {
+    res.json(data)
+  })
+ /* budgetModel.find({}, (err, items) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).json(items);
+    }
+  });*/
 });
-//fetching the json file into server.js file
 
-//fetch('C:\Users\dudip\NBAD\week03\personal-budget1\budget.json')
-//.then(data =>{
-//console.log(data);
-//});
-//const data = require('./data.json');
+// Endpoint to add new data to the database
+app.post('/budget01', (req, res) => {
+  const newItem = new budgetModel(req.body);
+  newItem.save()
+  .then((err)=> {
+    console.log(err)
+    res.status(200).send('item addedd successfully')
 
-/*const fs = require('fs');
+  })
 
-// Read the JSON file
-fs.readFile('budget.json', 'utf8', (err, data) => {
-  if (err) {
-    console.error('Error reading the JSON file:', err);
-    return;
-  }
-
-  try {
-    const jsonData = JSON.parse(data);
-    // Now you can work with the jsonData object
-    console.log(jsonData);
-    const bdata = jsonData;
-    app.get('/budget01',(req, res) => {
-        res.json(bdata);
-    });
-  } catch (error) {
-    console.error('Error parsing JSON data:', error);
-  }
+  /*newItem.save((err) => {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      res.status(201).send('Item added to the database');
+    }
+  });*/
 });
- 
-*/
+
+
+
 app.listen(port, () => {
-  console.log(' app serving at http://localhost:3000');
+  console.log(' app serving at http://localhost:'+port);
 });

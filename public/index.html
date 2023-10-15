@@ -114,7 +114,7 @@
             <div class="text-box">
                 <h1>Reshma's budget chart</h1>
                 <p>
-                    <canvas id="sample" width="450" height="450"></canvas>
+                    <canvas id="sample" width="200" height="200"></canvas>
                 </p>
             </div>
 
@@ -166,7 +166,7 @@
 
                         axios.get('/budget01').then(res => {
                             console.log(res);
-                            var data = res.data.mybudget.map(obj => {
+                            var data = res.data.map(obj => {
                                 return { label: obj.title, value: obj.budget }
                             })
                             change(data);
@@ -338,8 +338,8 @@
 
         function createChart() {
             var ctx = document.getElementById("sample").getContext("2d");
-            ctx.width  = 450;
-            ctx.height = 450;
+            ctx.width  = 200;
+            ctx.height = 200;
             var myPieChart = new Chart(ctx, {
                 type: 'pie',
                 data: datasource
@@ -349,9 +349,9 @@
             axios.get('http://localhost:3000/budget01')
                 .then(function (res) {
                     console.log(res);
-                    for (var i = 0; i < res.data.mybudget.length; i++) {
-                        datasource.datasets[0].data[i] = res.data.mybudget[i].budget;
-                        datasource.labels[i] = res.data.mybudget[i].title;
+                    for (var i = 0; i < res.data.length; i++) {
+                        datasource.datasets[0].data[i] = res.data[i].budget;
+                        datasource.labels[i] = res.data[i].title;
                     }
                     createChart();
                 }
